@@ -279,10 +279,10 @@
                     "fi",
                     
                     "# For CentOS 6 or RHEL 6, Amazon Linux is using Linux 7",
-                    "if [[ $OS == *\"Amazon\"* ]] && [$CPUARCH == \"x86_64\" ]; then",
+                    "if [[ $OS == *\"Amazon\"* ]] && [[ $CPUARCH == \"x86_64\" ]]; then",
                         "echo \"Amazon Linux x86\"",
                         "OSCHECK=2",
-                    "elif [[ $OS == *\"Amazon\"* ]] && [$CPUARCH == \"aarch64\" ]; then",
+                    "elif [[ $OS == *\"Amazon\"* ]] && [[ $CPUARCH == \"aarch64\" ]]; then",
                         "echo \"Amazon Linux arm64\"",
                         "OSCHECK=21",
                     "elif [[ $OS == *\"CentOS\"* ]] && [ ${VER:0:1} == \"6\" ]; then",
