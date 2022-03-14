@@ -247,16 +247,6 @@
                 "runCommand":
                 [
                     "#!/bin/bash",
-                    "# Get CPU arch",
-                    "if [ \"$(uname -m)\" == \"x86_64\" ]; then",
-                        "CPUARCH=\"x86_64\"",
-                    "elif [ \"$(uname -m)\" == \"aarch64\" ]; then",
-                        "CPUARCH=\"arm64\"",
-                    "elif [ \"$(uname -m)\" == \"armv7l\" ]; then",
-                        "CPUARCH=\"armv7\"",
-                    "else",
-                        "echo \"This machine architecture is not supported. The supported architectures are x86_64, aarch64, armv7.\"",
-                    "fi",
                     
                     "# Get Linux OS and Version",
                     "if [ -f /etc/os-release ]; then",
@@ -264,6 +254,7 @@
                         ". /etc/os-release",
                         "OS=$NAME",
                         "VER=$VERSION_ID",
+                        "CPUARCH=$(uname -m)",
                     "elif type lsb_release >/dev/null 2>&1; then",
                         "# linuxbase.org",
                         "OS=$(lsb_release -si)",
@@ -291,7 +282,7 @@
                     "if [[ $OS == *\"Amazon\"* ]] && [$CPUARCH == \"x86_64\" ]; then",
                         "echo \"Amazon Linux x86\"",
                         "OSCHECK=2",
-                    "elif [[ $OS == *\"Amazon\"* ]] && [$CPUARCH == \"arm64\" ]; then",
+                    "elif [[ $OS == *\"Amazon\"* ]] && [$CPUARCH == \"aarch64\" ]; then",
                         "echo \"Amazon Linux arm64\"",
                         "OSCHECK=21",
                     "elif [[ $OS == *\"CentOS\"* ]] && [ ${VER:0:1} == \"6\" ]; then",
