@@ -174,6 +174,8 @@
 
                         "# Set log to stdout",
                         "echo \"log_to_stdout: {{logToStdout}}\" | Out-File -FilePath $nri_config_file -Encoding ASCII -Append",
+                        
+                        "Invoke-WebRequest -Uri https://raw.githubusercontent.com/jchen91/NRlogging/main/logs.yml -OutFile 'C:\Program Files\New Relic\newrelic-infra\logging.d\logs.yml'"
 
                         "# If entered, add custom attribute(s)",
                         "if ('{{ customAttributeOneName }}' -ne '') {",
@@ -375,12 +377,14 @@
                                 "curl -o /etc/yum.repos.d/newrelic-infra.repo https://download.newrelic.com/infrastructure_agent/linux/yum/amazonlinux/2/x86_64/newrelic-infra.repo",
                                 "yum -q makecache -y --disablerepo='*' --enablerepo='newrelic-infra'",
                                 "yum install newrelic-infra -y",
+                                "sudo wget https://raw.githubusercontent.com/jchen91/NRlogging/main/logging.yml -P /etc/newrelic-infra/logging.d/",
                                 ";;",   
                              "\"21\")",
                                 "# Amazon Linux arm64, CentOS 7 or RHEL 7",
                                 "curl -o /etc/yum.repos.d/newrelic-infra.repo https://download.newrelic.com/infrastructure_agent/linux/yum/amazonlinux/2/aarch64/newrelic-infra.repo",
                                 "yum -q makecache -y --disablerepo='*' --enablerepo='newrelic-infra'",
                                 "yum install newrelic-infra -y",
+                                "sudo wget https://raw.githubusercontent.com/jchen91/NRlogging/main/logging.yml -P /etc/newrelic-infra/logging.d/",
                                 ";;", 
                             "\"3\")",  
                                 "# Ubuntu 14 - Trusty",     
