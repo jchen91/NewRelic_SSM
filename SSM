@@ -175,7 +175,7 @@
                         "# Set log to stdout",
                         "echo \"log_to_stdout: {{logToStdout}}\" | Out-File -FilePath $nri_config_file -Encoding ASCII -Append",
                         
-                        "Invoke-WebRequest -Uri https://raw.githubusercontent.com/jchen91/NRlogging/main/logs.yml -OutFile C:\Program Files\New Relic\newrelic-infra\logging.d\logs.yml"
+                        "Invoke-WebRequest -Uri https://raw.githubusercontent.com/jchen91/NRlogging/main/logs.yml -OutFile C:\\Program Files\\New Relic\\newrelic-infra\\logging.d\\logs.yml",
 
                         "# If entered, add custom attribute(s)",
                         "if ('{{ customAttributeOneName }}' -ne '') {",
