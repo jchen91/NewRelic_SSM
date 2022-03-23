@@ -38,6 +38,7 @@
         "displayNameFromTag":
         {
             "type":"String",
+            "default":"",
             "description":"(Optional) Override the auto-generated hostname with tag value.",
             "maxChars":40
         },
@@ -167,8 +168,7 @@
                         
                         "# If entered, add the Display name of Tag",
                         "if ('{{ displayNameFromTag }}' -ne '') {",
-                            "TAGVALUE=$(aws ec2 describe-tags --filters \"Name=key,Values={{ displayNameFromTag }}\" --output=text | cut -f5)",
-                            "echo \"display_name: $TAGVALUE\" | Out-File -FilePath $nri_config_file -Encoding ASCII -Append",
+                            "#pending, needs to add command to get the tag value",
                         "}",
 
                         "# If entered, set the Proxy",
