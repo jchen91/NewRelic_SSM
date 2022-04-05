@@ -158,7 +158,8 @@
                         
                         "# If entered, add the Display name of Tag",
                         "if ('{{ displayNameFromTag }}' -ne '') {",
-                            "#pending, needs to add command to get the tag value",
+                            "$Tagvalue = (Get-EC2Tag -Filter @{Name=\"resource-type\";Values=\"instance\"},@{Name=\"resource-id\";Values=(Get-EC2InstanceMetadata -Category InstanceId)} | ? { $_.key -eq '{{ displayNameFromTag }}' }| select -expand Value)",
+                            "echo \"display_name: $Tagvalue\" | Out-File -FilePath $nri_config_file -Encoding ASCII -Append",
                         "}",
 
                         "# If entered, set the Proxy",
@@ -204,7 +205,7 @@
                         "}",
 
                         "# Start the agent service",
-                        "net start newrelic-infra",
+                        "Restart-Service newrelic-infra",
                     "}",
                     "ElseIf ('{{ action }}' -eq 'Update') {",
                         "# Download the latest New Relic Infrastructure agent",
@@ -218,8 +219,8 @@
 
                         "# Install the agent",
                         "msiexec.exe /qn /i \"$env:TEMP\\newrelic-infra.msi\" GENERATE_CONFIG=true LICENSE_KEY=\"{{licenseKey}}\" | Out-Null",
-
-
+                        "# Start the agent service",
+                        "Restart-Service newrelic-infra",
                     "}",
                     "Else {",
                         "# Remove the New Relic Infrastructure agent",
