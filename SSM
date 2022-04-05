@@ -138,28 +138,17 @@
                     "$nri_config_file = 'C:\\Program Files\\New Relic\\newrelic-infra\\newrelic-infra.yml'",
 
                     "# Get the New Relic Infrastructure agent",
-                    "if ('{{ action }}' -eq 'Install') {",
-                        "if ('{{ agentFileLocation }}' -ne '') {",
-                            "$msiFileName = '{{ agentFileLocation }}'",
-                            "if ( $msiFileName.Substring(0,4) -eq 'http') {",
-                                "wget $msiFileName -OutFile c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
-                            "}",
-                            "Else {",
-                                "Copy-Item $msiFileName c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
-                            "}",
+                    "if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq \"64-bit\"){",
+                        "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi\", \"$env:TEMP\newrelic-infra.msi\")",
+
                         "}",
                         "Else {",
-                            "wget https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi -OutFile c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
+                            "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/386/newrelic-infra-386.msi\", \"$env:TEMP\newrelic-infra.msi\")",
                         "}",
 
                         "# Install the agent",
-                        "msiexec.exe /qn /i c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
+                        "msiexec.exe /qn /i \"$env:TEMP\newrelic-infra.msi\" GENERATE_CONFIG=true LICENSE_KEY=\"{{licenseKey}}\" | Out-Null",
 
-                        "# Need a little bit of time to allow the agent/directory/service to install - 5 seconds",
-                        "Start-Sleep -s 5",
-
-                        "# Set up the configuration file",
-                        "echo \"license_key: {{licenseKey}}\" | Out-File -FilePath $nri_config_file -Encoding ASCII",
 
                         "# If entered, add the Display name",
                         "if ('{{ displayName }}' -ne '') {",
