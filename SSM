@@ -372,7 +372,7 @@
                         
                         "# If entered, add the Display name of Tag",
                         "if [ '{{ displayNameFromTag }}' != '' ]; then",
-                            "REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')",
+                            "REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\\\" '{print $4}')",
                             "EC2_INSTANCE_ID=$(ec2-metadata --instance-id | cut -d \":\" -f2)",
                             "TAGVALUE=$(aws ec2 describe-tags --filters \"Name=key,Values={{ displayNameFromTag }}\" \"Name=resource-id, Values=$EC2_INSTANCE_ID\" --region=$REGION --output=text | cut -f5)",
                             "echo \"display_name: $TAGVALUE\" | sudo tee -a /etc/newrelic-infra.yml",
