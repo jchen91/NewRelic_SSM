@@ -138,16 +138,17 @@
                     "$nri_config_file = 'C:\\Program Files\\New Relic\\newrelic-infra\\newrelic-infra.yml'",
 
                     "# Get the New Relic Infrastructure agent",
-                    "if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq \"64-bit\"){",
-                        "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi\", \"$env:TEMP\newrelic-infra.msi\")",
+                    "if ('{{ action }}' -eq 'Install') {",
+                        "if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq \"64-bit\"){",
+                        "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi\", \"$env:TEMP\\newrelic-infra.msi\")",
 
                         "}",
                         "Else {",
-                            "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/386/newrelic-infra-386.msi\", \"$env:TEMP\newrelic-infra.msi\")",
+                            "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/386/newrelic-infra-386.msi\", \"$env:TEMP\\newrelic-infra.msi\")",
                         "}",
 
                         "# Install the agent",
-                        "msiexec.exe /qn /i \"$env:TEMP\newrelic-infra.msi\" GENERATE_CONFIG=true LICENSE_KEY=\"{{licenseKey}}\" | Out-Null",
+                        "msiexec.exe /qn /i \"$env:TEMP\\newrelic-infra.msi\" GENERATE_CONFIG=true LICENSE_KEY=\"{{licenseKey}}\" | Out-Null",
 
 
                         "# If entered, add the Display name",
@@ -207,21 +208,18 @@
                     "}",
                     "ElseIf ('{{ action }}' -eq 'Update') {",
                         "# Download the latest New Relic Infrastructure agent",
-                        "if ('{{ agentFileLocation }}' -ne '') {",
-                            "$msiFileName = '{{ agentFileLocation }}'",
-                            "if ( $msiFileName.Substring(0,4) -eq 'http') {",
-                                "wget $msiFileName -OutFile c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
-                            "}",
-                            "Else {",
-                                "Copy-Item $msiFileName c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
-                            "}",
+                        "if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq \"64-bit\"){",
+                        "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi\", \"$env:TEMP\\newrelic-infra.msi\")",
+
                         "}",
                         "Else {",
-                            "wget https://download.newrelic.com/infrastructure_agent/windows/newrelic-infra.msi -OutFile c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
+                            "(New-Object System.Net.WebClient).DownloadFile(\"https://download.newrelic.com/infrastructure_agent/windows/386/newrelic-infra-386.msi\", \"$env:TEMP\\newrelic-infra.msi\")",
                         "}",
 
                         "# Install the agent",
-                        "msiexec.exe /qn /i c:\\Users\\Administrator\\Documents\\newrelic-infra.msi",
+                        "msiexec.exe /qn /i \"$env:TEMP\\newrelic-infra.msi\" GENERATE_CONFIG=true LICENSE_KEY=\"{{licenseKey}}\" | Out-Null",
+
+
                     "}",
                     "Else {",
                         "# Remove the New Relic Infrastructure agent",
