@@ -1,6 +1,6 @@
 {
     "schemaVersion":"2.2",
-    "description":"Install, update, or remove the New Relic Infrastructure agent. Infrastructure supports these operating systems: Amazon Linux all versions, CentOS version 6 or higher, Debian version 7 (Wheezy) or higher - Note: SSM not supported on Debian, Red Hat Enterprise Linux (RHEL) version 6 or higher, Ubuntu versions 12.04.*, 14.04.*, and 16.04.* (LTS  versions), and Windows Server 2008, 2012, and 2016 and their service packs. - by Kevin Downs http://linkedin.com/in/kupsand",
+    "description":"Install, update, or remove the New Relic Infrastructure agent. Infrastructure supports these operating systems: Amazon Linux all versions, CentOS version 6 or higher, Debian version 7 (Wheezy) or higher - Note: SSM not supported on Debian, Red Hat Enterprise Linux (RHEL) version 6 or higher, Ubuntu versions 12.04.*, 14.04.*, and 16.04.* (LTS  versions), and Windows Server 2008, 2012, and 2016 and their service packs.",
     "parameters":
     {
         "action":
